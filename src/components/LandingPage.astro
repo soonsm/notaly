@@ -1,0 +1,254 @@
+---
+import ExternalLink from './ExternalLink.astro';
+import { siteConfig, buildCategoryUrl } from '../config/site';
+
+const { content, lang } = Astro.props;
+
+const qnaSlug =
+  lang === 'ko'
+    ? siteConfig.discussions.categories.qnaKoSlug
+    : siteConfig.discussions.categories.qnaEnSlug;
+const bugSlug =
+  lang === 'ko'
+    ? siteConfig.discussions.categories.bugKoSlug
+    : siteConfig.discussions.categories.bugEnSlug;
+
+const qnaUrl = buildCategoryUrl(qnaSlug);
+const bugUrl = buildCategoryUrl(bugSlug);
+const featureUrl = buildCategoryUrl(siteConfig.discussions.categories.featureSlug);
+const announcementsUrl = buildCategoryUrl(siteConfig.discussions.categories.announcementsSlug);
+
+const hasDocs = Boolean(siteConfig.docsBaseUrl);
+const hasFaq = Boolean(siteConfig.faqBaseUrl);
+const hasMacDownload = Boolean(siteConfig.download.macosUrl);
+const hasWindowsDownload = Boolean(siteConfig.download.windowsUrl);
+---
+<div class="relative">
+  <header class="sticky top-0 z-20 border-b border-transparent bg-[#0d1117]/80 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div class="text-lg font-semibold tracking-wide text-slate-100">Notaly</div>
+      <nav class="hidden items-center gap-6 text-sm text-slate-300 md:flex">
+        <a href="#features" class="transition hover:text-white">{content.nav.features}</a>
+        <a href="#download" class="transition hover:text-white">{content.nav.download}</a>
+        {hasDocs && (
+          <ExternalLink href={siteConfig.docsBaseUrl}>
+            {content.nav.docs}
+          </ExternalLink>
+        )}
+        {hasFaq && (
+          <ExternalLink href={siteConfig.faqBaseUrl}>
+            {content.nav.faq}
+          </ExternalLink>
+        )}
+        {qnaUrl && <ExternalLink href={qnaUrl}>{content.nav.qna}</ExternalLink>}
+        <ExternalLink href={siteConfig.githubRepoUrl}>{content.nav.github}</ExternalLink>
+      </nav>
+      <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+        <a
+          href="/ko/"
+          class={
+            lang === 'ko'
+              ? 'text-white'
+              : 'transition hover:text-white'
+          }
+        >
+          KO
+        </a>
+        <span class="text-[#30363d]">/</span>
+        <a
+          href="/en/"
+          class={
+            lang === 'en'
+              ? 'text-white'
+              : 'transition hover:text-white'
+          }
+        >
+          EN
+        </a>
+      </div>
+    </div>
+    <div class="mx-auto max-w-6xl px-6 pb-4 md:hidden">
+      <div class="flex flex-wrap items-center gap-4 text-xs text-slate-300">
+        <a href="#features" class="transition hover:text-white">{content.nav.features}</a>
+        <a href="#download" class="transition hover:text-white">{content.nav.download}</a>
+        {hasDocs && (
+          <ExternalLink href={siteConfig.docsBaseUrl}>
+            {content.nav.docs}
+          </ExternalLink>
+        )}
+        {hasFaq && (
+          <ExternalLink href={siteConfig.faqBaseUrl}>
+            {content.nav.faq}
+          </ExternalLink>
+        )}
+        {qnaUrl && <ExternalLink href={qnaUrl}>{content.nav.qna}</ExternalLink>}
+        <ExternalLink href={siteConfig.githubRepoUrl}>{content.nav.github}</ExternalLink>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10">
+    <section id="download" class="mx-auto max-w-6xl px-6 pb-16 pt-12 md:pt-20">
+      <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div>
+          <p class="text-sm uppercase tracking-[0.2em] text-[#8b949e]">Local-first desktop app</p>
+          <h1 class="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+            <span class="bg-gradient-to-r from-[#58a6ff] via-[#a371f7] to-[#d2a8ff] bg-clip-text text-transparent">
+              {content.hero.title}
+            </span>
+          </h1>
+          <p class="mt-4 text-lg text-slate-300">{content.hero.slogan}</p>
+          <p class="mt-4 max-w-xl text-base text-slate-400">{content.hero.description}</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            {hasMacDownload && (
+              <ExternalLink
+                href={siteConfig.download.macosUrl}
+                variant="button"
+                class="border-transparent bg-[#1f6feb] text-white hover:border-[#1f6feb]"
+              >
+                {content.hero.ctaMac}
+              </ExternalLink>
+            )}
+            {hasWindowsDownload && (
+              <ExternalLink
+                href={siteConfig.download.windowsUrl}
+                variant="button"
+                class="border-[#30363d] bg-[#161b22]"
+              >
+                {content.hero.ctaWindows}
+              </ExternalLink>
+            )}
+            <ExternalLink
+              href={siteConfig.githubRepoUrl}
+              variant="button"
+              class="border-[#30363d] bg-transparent"
+            >
+              {content.hero.ctaGithub}
+            </ExternalLink>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-[#30363d] bg-[#0b0f16] p-6 shadow-[0_0_40px_rgba(31,111,235,0.15)]">
+          <div class="flex items-center gap-3 text-xs text-slate-400">
+            <span class="h-2 w-2 rounded-full bg-[#f85149]"></span>
+            <span class="h-2 w-2 rounded-full bg-[#f1e05a]"></span>
+            <span class="h-2 w-2 rounded-full bg-[#3fb950]"></span>
+            <span>notaly://workspace</span>
+          </div>
+          <div class="mt-6 space-y-4 text-sm text-slate-300">
+            <div class="rounded-lg border border-[#30363d] bg-[#161b22] p-4">
+              <p class="text-slate-100"># quick-capture</p>
+              <p class="mt-2 text-slate-400">{content.scatter.left.copy}</p>
+            </div>
+            <div class="rounded-lg border border-[#30363d] bg-[#161b22] p-4">
+              <p class="text-slate-100"># live-queries</p>
+              <p class="mt-2 text-slate-400">{content.scatter.right.copy}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 pb-16">
+      <div class="rounded-2xl border border-[#30363d] bg-[#161b22]/80 p-8 backdrop-blur">
+        <div class="flex flex-col gap-3">
+          <p class="text-sm uppercase tracking-[0.2em] text-[#8b949e]">Scatter / Unite</p>
+          <h2 class="text-2xl font-semibold text-white">{content.scatter.title}</h2>
+          <p class="max-w-2xl text-sm text-slate-400">{content.scatter.subtitle}</p>
+        </div>
+        <div class="mt-8 grid gap-6 md:grid-cols-2">
+          <div class="rounded-xl border border-[#30363d] bg-[#0d1117] p-6">
+            <p class="text-sm font-semibold text-slate-200">{content.scatter.left.title}</p>
+            <p class="mt-2 text-sm text-slate-400">{content.scatter.left.copy}</p>
+            <pre class="mt-4 whitespace-pre-wrap rounded-lg border border-[#30363d] bg-[#0b0f16] p-4 text-xs text-slate-300">
+{content.scatter.left.code}</pre>
+          </div>
+          <div class="rounded-xl border border-[#30363d] bg-[#0d1117] p-6">
+            <p class="text-sm font-semibold text-slate-200">{content.scatter.right.title}</p>
+            <p class="mt-2 text-sm text-slate-400">{content.scatter.right.copy}</p>
+            <pre class="mt-4 whitespace-pre-wrap rounded-lg border border-[#30363d] bg-[#0b0f16] p-4 text-xs text-slate-300">
+{content.scatter.right.code}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="mx-auto max-w-6xl px-6 pb-16">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-semibold text-white">{content.features.title}</h2>
+      </div>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        {content.features.cards.map((card) => (
+          <div class="rounded-2xl border border-[#30363d] bg-[#161b22] p-6 transition duration-200 hover:-translate-y-0.5 hover:border-[#1f6feb]">
+            <h3 class="text-lg font-semibold text-white">{card.title}</h3>
+            <p class="mt-3 text-sm text-slate-400">{card.copy}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-6xl px-6 pb-16">
+      <div class="rounded-2xl border border-[#30363d] bg-gradient-to-br from-[#161b22] via-[#0d1117] to-[#0d1117] p-8">
+        <h2 class="text-2xl font-semibold text-white">{content.beta.title}</h2>
+        <p class="mt-3 text-sm text-slate-400">{content.beta.copy}</p>
+        <div class="mt-4 space-y-2 text-sm text-slate-300">
+          <p>{content.beta.os}</p>
+          <p>{content.beta.updates}</p>
+        </div>
+      </div>
+    </section>
+
+    {hasFaq && (
+      <section id="faq" class="mx-auto max-w-6xl px-6 pb-16">
+        <div class="flex flex-col items-start justify-between gap-4 rounded-2xl border border-[#30363d] bg-[#161b22] p-8 md:flex-row md:items-center">
+          <div>
+            <h2 class="text-2xl font-semibold text-white">{content.faq.title}</h2>
+            <p class="mt-2 text-sm text-slate-400">{content.faq.copy}</p>
+          </div>
+          <ExternalLink
+            href={siteConfig.faqBaseUrl}
+            variant="button"
+            class="border-[#30363d] bg-[#0d1117]"
+          >
+            {content.faq.cta}
+          </ExternalLink>
+        </div>
+      </section>
+    )}
+
+    <section id="community" class="mx-auto max-w-6xl px-6 pb-20">
+      <div class="rounded-2xl border border-[#30363d] bg-[#161b22] p-8">
+        <h2 class="text-2xl font-semibold text-white">{content.community.title}</h2>
+        <p class="mt-2 text-sm text-slate-400">{content.community.copy}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          {qnaUrl && (
+            <ExternalLink href={qnaUrl} variant="button">
+              {content.community.qna}
+            </ExternalLink>
+          )}
+          {bugUrl && (
+            <ExternalLink href={bugUrl} variant="button">
+              {content.community.bug}
+            </ExternalLink>
+          )}
+          {featureUrl && (
+            <ExternalLink href={featureUrl} variant="button">
+              {content.community.feature}
+            </ExternalLink>
+          )}
+          {announcementsUrl && (
+            <ExternalLink href={announcementsUrl} variant="button">
+              {content.community.announcements}
+            </ExternalLink>
+          )}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="relative z-10 border-t border-[#30363d]">
+    <div class="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
+      <p>© {new Date().getFullYear()} Notaly Project</p>
+      <p>{content.footer.slogan}</p>
+    </div>
+  </footer>
+</div>

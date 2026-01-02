@@ -1,0 +1,23 @@
+---
+const { href, class: className, ariaLabel, variant = 'link' } = Astro.props;
+
+if (!href) {
+  throw new Error('ExternalLink requires href');
+}
+
+const baseClass =
+  variant === 'button'
+    ? 'inline-flex items-center justify-center rounded-md border border-[#30363d] bg-[#161b22] px-4 py-2 text-sm font-semibold text-slate-100 transition duration-200 hover:-translate-y-0.5 hover:border-[#1f6feb] hover:text-white'
+    : 'text-slate-300 transition hover:text-white';
+
+const combinedClass = className ? `${baseClass} ${className}` : baseClass;
+---
+<a
+  href={href}
+  class={combinedClass}
+  target="_blank"
+  rel="noreferrer noopener"
+  aria-label={ariaLabel}
+>
+  <slot />
+</a>

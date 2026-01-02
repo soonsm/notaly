@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LandingPage from '../../components/LandingPage.astro';
+import { enContent } from '../../content/landing';
+---
+<BaseLayout title={enContent.meta.title} description={enContent.meta.description} lang="en">
+  <LandingPage content={enContent} lang="en" />
+</BaseLayout>
