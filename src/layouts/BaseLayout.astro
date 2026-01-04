@@ -22,13 +22,7 @@ const ogImageUrl = new URL('/og-placeholder.svg', siteConfig.siteUrl).toString()
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
-  <body class="min-h-screen bg-[#0d1117] font-sans text-slate-100 antialiased">
-    <div class="relative overflow-hidden">
-      <div class="pointer-events-none absolute inset-0">
-        <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-[#1f6feb]/20 blur-[140px]"></div>
-        <div class="absolute -bottom-32 right-16 h-72 w-72 rounded-full bg-[#8b5cf6]/20 blur-[140px]"></div>
-      </div>
-      <slot />
-    </div>
+  <body class="min-h-screen bg-[#0d1117] font-sans text-[#e6edf3] antialiased">
+    <slot />
   </body>
 </html>

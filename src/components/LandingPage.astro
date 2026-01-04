@@ -20,177 +20,196 @@ const announcementsUrl = buildCategoryUrl(siteConfig.discussions.categories.anno
 
 const hasDocs = Boolean(siteConfig.docsBaseUrl);
 const hasFaq = Boolean(siteConfig.faqBaseUrl);
-const hasMacDownload = Boolean(siteConfig.download.macosUrl);
-const hasWindowsDownload = Boolean(siteConfig.download.windowsUrl);
+
+const macUrl = siteConfig.download.macosUrl;
+const windowsUrl = siteConfig.download.windowsUrl;
+const hasMacDownload = Boolean(macUrl);
+const hasWindowsDownload = Boolean(windowsUrl);
+const useSingleDownload =
+  hasMacDownload && hasWindowsDownload && macUrl === windowsUrl;
+const singleDownloadUrl = macUrl || windowsUrl;
+const primaryDownload = hasMacDownload ? 'mac' : hasWindowsDownload ? 'windows' : null;
+
+const languageToggle =
+  lang === 'ko'
+    ? { href: '/set-lang/en', label: 'English' }
+    : { href: '/set-lang/ko', label: '한국어' };
+
+const primaryDownloadClass =
+  'bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-xl font-bold text-lg transition shadow-xl shadow-blue-900/30';
+const secondaryDownloadClass =
+  'border border-gray-700 hover:border-gray-500 text-white px-10 py-4 rounded-xl font-bold text-lg transition';
+
+const featureIconClasses = ['text-blue-500', 'text-purple-500', 'text-green-500'];
 ---
 <div class="relative">
-  <header class="sticky top-0 z-20 border-b border-transparent bg-[#0d1117]/80 backdrop-blur">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      <div class="text-lg font-semibold tracking-wide text-slate-100">Notaly</div>
-      <nav class="hidden items-center gap-6 text-sm text-slate-300 md:flex">
-        <a href="#features" class="transition hover:text-white">{content.nav.features}</a>
-        <a href="#download" class="transition hover:text-white">{content.nav.download}</a>
-        {hasDocs && (
-          <ExternalLink href={siteConfig.docsBaseUrl}>
-            {content.nav.docs}
+  <header class="fixed top-0 z-50 w-full border-b border-gray-800 bg-[#0d1117]/80 backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <div class="flex items-center gap-8">
+        <a href="#download" class="text-2xl font-bold gradient-text">Notaly</a>
+        <nav class="hidden gap-6 text-sm font-medium text-gray-400 md:flex">
+          <a href="#features" class="nav-link">{content.nav.features}</a>
+          <a href="#download" class="nav-link">{content.nav.download}</a>
+          {qnaUrl && (
+            <ExternalLink href={qnaUrl} class="nav-link text-gray-400 font-medium">
+              {content.nav.qna}
+            </ExternalLink>
+          )}
+          {hasDocs && (
+            <ExternalLink href={siteConfig.docsBaseUrl} class="nav-link text-gray-400 font-medium">
+              {content.nav.docs}
+            </ExternalLink>
+          )}
+          {hasFaq && (
+            <ExternalLink href={siteConfig.faqBaseUrl} class="nav-link text-gray-400 font-medium">
+              {content.nav.faq}
+            </ExternalLink>
+          )}
+          <ExternalLink href={siteConfig.githubRepoUrl} class="nav-link text-gray-400 font-medium">
+            {content.nav.github}
           </ExternalLink>
-        )}
-        {hasFaq && (
-          <ExternalLink href={siteConfig.faqBaseUrl}>
-            {content.nav.faq}
-          </ExternalLink>
-        )}
-        {qnaUrl && <ExternalLink href={qnaUrl}>{content.nav.qna}</ExternalLink>}
-        <ExternalLink href={siteConfig.githubRepoUrl}>{content.nav.github}</ExternalLink>
-      </nav>
-      <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+        </nav>
+      </div>
+      <div class="flex items-center gap-4">
         <a
-          href="/set-lang/ko"
-          class={
-            lang === 'ko'
-              ? 'text-white'
-              : 'transition hover:text-white'
-          }
+          href={languageToggle.href}
+          class="rounded-full border border-gray-700 px-3 py-1 text-xs text-gray-400 transition hover:border-gray-500"
         >
-          KO
+          {languageToggle.label}
         </a>
-        <span class="text-[#30363d]">/</span>
         <a
-          href="/set-lang/en"
-          class={
-            lang === 'en'
-              ? 'text-white'
-              : 'transition hover:text-white'
-          }
+          href="#download"
+          class="rounded-lg bg-blue-600 px-4 py-1.5 text-sm font-bold text-white shadow-lg shadow-blue-900/20 transition hover:bg-blue-500"
         >
-          EN
+          {content.hero.ctaBeta}
         </a>
       </div>
     </div>
     <div class="mx-auto max-w-6xl px-6 pb-4 md:hidden">
-      <div class="flex flex-wrap items-center gap-4 text-xs text-slate-300">
-        <a href="#features" class="transition hover:text-white">{content.nav.features}</a>
-        <a href="#download" class="transition hover:text-white">{content.nav.download}</a>
+      <nav class="flex flex-wrap gap-4 text-xs font-medium text-gray-400">
+        <a href="#features" class="nav-link">{content.nav.features}</a>
+        <a href="#download" class="nav-link">{content.nav.download}</a>
+        {qnaUrl && (
+          <ExternalLink href={qnaUrl} class="nav-link text-gray-400 font-medium">
+            {content.nav.qna}
+          </ExternalLink>
+        )}
         {hasDocs && (
-          <ExternalLink href={siteConfig.docsBaseUrl}>
+          <ExternalLink href={siteConfig.docsBaseUrl} class="nav-link text-gray-400 font-medium">
             {content.nav.docs}
           </ExternalLink>
         )}
         {hasFaq && (
-          <ExternalLink href={siteConfig.faqBaseUrl}>
+          <ExternalLink href={siteConfig.faqBaseUrl} class="nav-link text-gray-400 font-medium">
             {content.nav.faq}
           </ExternalLink>
         )}
-        {qnaUrl && <ExternalLink href={qnaUrl}>{content.nav.qna}</ExternalLink>}
-        <ExternalLink href={siteConfig.githubRepoUrl}>{content.nav.github}</ExternalLink>
-      </div>
+        <ExternalLink href={siteConfig.githubRepoUrl} class="nav-link text-gray-400 font-medium">
+          {content.nav.github}
+        </ExternalLink>
+      </nav>
     </div>
   </header>
 
-  <main class="relative z-10">
-    <section id="download" class="mx-auto max-w-6xl px-6 pb-16 pt-12 md:pt-20">
-      <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-        <div>
-          <p class="text-sm uppercase tracking-[0.2em] text-[#8b949e]">Local-first desktop app</p>
-          <h1 class="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-            <span class="bg-gradient-to-r from-[#58a6ff] via-[#a371f7] to-[#d2a8ff] bg-clip-text text-transparent">
-              {content.hero.title}
-            </span>
-          </h1>
-          <p class="mt-4 text-lg text-slate-300">{content.hero.slogan}</p>
-          <p class="mt-4 max-w-xl text-base text-slate-400">{content.hero.description}</p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            {hasMacDownload && (
-              <ExternalLink
-                href={siteConfig.download.macosUrl}
-                variant="button"
-                class="border-transparent bg-[#1f6feb] text-white hover:border-[#1f6feb]"
-              >
-                {content.hero.ctaMac}
-              </ExternalLink>
-            )}
-            {hasWindowsDownload && (
-              <ExternalLink
-                href={siteConfig.download.windowsUrl}
-                variant="button"
-                class="border-[#30363d] bg-[#161b22]"
-              >
-                {content.hero.ctaWindows}
-              </ExternalLink>
-            )}
-            <ExternalLink
-              href={siteConfig.githubRepoUrl}
-              variant="button"
-              class="border-[#30363d] bg-transparent"
-            >
-              {content.hero.ctaGithub}
-            </ExternalLink>
+  <main class="pt-16">
+    <section id="download" class="mx-auto max-w-6xl scroll-mt-24 px-6 pt-24 text-center md:pt-32">
+      <div class="mb-8 inline-block rounded-full border border-blue-500/30 bg-blue-900/20 px-4 py-1 text-xs font-bold text-blue-400">
+        {content.hero.badge}
+      </div>
+
+      <h1 class="hero-title mb-8 text-6xl font-bold gradient-text md:text-8xl">
+        {content.hero.title}
+      </h1>
+      <p class="mb-10 text-2xl font-light leading-tight text-gray-300 md:text-4xl">
+        <span>{content.hero.taglineLine1}</span>
+        <br class="md:hidden" />
+        <span> {content.hero.taglineLine2}</span>
+      </p>
+      <p class="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-gray-500 md:text-xl">
+        {content.hero.description}
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        {useSingleDownload && singleDownloadUrl && (
+          <ExternalLink href={singleDownloadUrl} variant="button" class={primaryDownloadClass}>
+            {content.hero.ctaDownload}
+          </ExternalLink>
+        )}
+        {!useSingleDownload && hasMacDownload && (
+          <ExternalLink
+            href={macUrl}
+            variant="button"
+            class={primaryDownload === 'mac' ? primaryDownloadClass : secondaryDownloadClass}
+          >
+            {content.hero.ctaMac}
+          </ExternalLink>
+        )}
+        {!useSingleDownload && hasWindowsDownload && (
+          <ExternalLink
+            href={windowsUrl}
+            variant="button"
+            class={primaryDownload === 'windows' ? primaryDownloadClass : secondaryDownloadClass}
+          >
+            {content.hero.ctaWindows}
+          </ExternalLink>
+        )}
+        <ExternalLink href={siteConfig.githubRepoUrl} variant="button" class={secondaryDownloadClass}>
+          {content.hero.ctaGithub}
+        </ExternalLink>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-5xl px-6 py-12">
+      <div class="card grid items-center gap-10 rounded-[2.5rem] p-10 md:grid-cols-2">
+        <div class="text-left">
+          <h3 class="code-font mb-4 text-sm font-bold text-blue-400 opacity-70">
+            {content.scatter.left.title}
+          </h3>
+          <div class="code-font rounded-2xl border border-gray-800 bg-black p-6 text-xs leading-relaxed text-gray-400 shadow-inner md:text-sm">
+            <span class="text-green-500">## Notaly Notes</span><br />
+            - Review API <span class="text-purple-400">&#123;type: 'task'&#125;</span><br />
+            <br />
+            <span class="text-green-500">## Diary</span><br />
+            - Buy coffee <span class="text-purple-400">&#123;type: 'task'&#125;</span>
           </div>
         </div>
-        <div class="rounded-2xl border border-[#30363d] bg-[#0b0f16] p-6 shadow-[0_0_40px_rgba(31,111,235,0.15)]">
-          <div class="flex items-center gap-3 text-xs text-slate-400">
-            <span class="h-2 w-2 rounded-full bg-[#f85149]"></span>
-            <span class="h-2 w-2 rounded-full bg-[#f1e05a]"></span>
-            <span class="h-2 w-2 rounded-full bg-[#3fb950]"></span>
-            <span>notaly://workspace</span>
-          </div>
-          <div class="mt-6 space-y-4 text-sm text-slate-300">
-            <div class="rounded-lg border border-[#30363d] bg-[#161b22] p-4">
-              <p class="text-slate-100"># quick-capture</p>
-              <p class="mt-2 text-slate-400">{content.scatter.left.copy}</p>
-            </div>
-            <div class="rounded-lg border border-[#30363d] bg-[#161b22] p-4">
-              <p class="text-slate-100"># live-queries</p>
-              <p class="mt-2 text-slate-400">{content.scatter.right.copy}</p>
+        <div class="text-left">
+          <h3 class="code-font mb-4 text-sm font-bold text-purple-400 opacity-70">
+            {content.scatter.right.title}
+          </h3>
+          <div class="code-font rounded-2xl border border-gray-800 bg-[#0a0c10] p-6 text-xs leading-relaxed text-gray-300 shadow-inner md:text-sm">
+            <span class="text-blue-400">query</span> &#123;type: 'task'&#125;<br />
+            <hr class="my-3 border-gray-800" />
+            <div class="space-y-2">
+              ● Review API<br />
+              ● Buy coffee
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 pb-16">
-      <div class="rounded-2xl border border-[#30363d] bg-[#161b22]/80 p-8 backdrop-blur">
-        <div class="flex flex-col gap-3">
-          <p class="text-sm uppercase tracking-[0.2em] text-[#8b949e]">Scatter / Unite</p>
-          <h2 class="text-2xl font-semibold text-white">{content.scatter.title}</h2>
-          <p class="max-w-2xl text-sm text-slate-400">{content.scatter.subtitle}</p>
-        </div>
-        <div class="mt-8 grid gap-6 md:grid-cols-2">
-          <div class="rounded-xl border border-[#30363d] bg-[#0d1117] p-6">
-            <p class="text-sm font-semibold text-slate-200">{content.scatter.left.title}</p>
-            <p class="mt-2 text-sm text-slate-400">{content.scatter.left.copy}</p>
-            <pre class="mt-4 whitespace-pre-wrap rounded-lg border border-[#30363d] bg-[#0b0f16] p-4 text-xs text-slate-300">
-{content.scatter.left.code}</pre>
-          </div>
-          <div class="rounded-xl border border-[#30363d] bg-[#0d1117] p-6">
-            <p class="text-sm font-semibold text-slate-200">{content.scatter.right.title}</p>
-            <p class="mt-2 text-sm text-slate-400">{content.scatter.right.copy}</p>
-            <pre class="mt-4 whitespace-pre-wrap rounded-lg border border-[#30363d] bg-[#0b0f16] p-4 text-xs text-slate-300">
-{content.scatter.right.code}</pre>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="features" class="mx-auto max-w-6xl px-6 pb-16">
-      <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-semibold text-white">{content.features.title}</h2>
-      </div>
-      <div class="mt-8 grid gap-6 md:grid-cols-3">
-        {content.features.cards.map((card) => (
-          <div class="rounded-2xl border border-[#30363d] bg-[#161b22] p-6 transition duration-200 hover:-translate-y-0.5 hover:border-[#1f6feb]">
-            <h3 class="text-lg font-semibold text-white">{card.title}</h3>
-            <p class="mt-3 text-sm text-slate-400">{card.copy}</p>
+    <section id="features" class="mx-auto max-w-6xl scroll-mt-24 px-6 py-32">
+      <h2 class="mb-16 text-center text-3xl font-bold text-gray-200">
+        {content.features.title}
+      </h2>
+      <div class="grid gap-8 md:grid-cols-3">
+        {content.features.cards.map((card, index) => (
+          <div class="card rounded-3xl p-10">
+            <div class={`mb-6 text-3xl ${featureIconClasses[index % featureIconClasses.length]}`}>
+              {card.icon}
+            </div>
+            <h4 class="mb-4 text-xl font-bold">{card.title}</h4>
+            <p class="leading-relaxed text-gray-500">{card.copy}</p>
           </div>
         ))}
       </div>
     </section>
 
-    <section class="mx-auto max-w-6xl px-6 pb-16">
-      <div class="rounded-2xl border border-[#30363d] bg-gradient-to-br from-[#161b22] via-[#0d1117] to-[#0d1117] p-8">
-        <h2 class="text-2xl font-semibold text-white">{content.beta.title}</h2>
-        <p class="mt-3 text-sm text-slate-400">{content.beta.copy}</p>
-        <div class="mt-4 space-y-2 text-sm text-slate-300">
+    <section class="mx-auto max-w-5xl px-6 py-16">
+      <div class="card rounded-3xl p-10">
+        <h2 class="mb-4 text-2xl font-bold text-gray-200">{content.beta.title}</h2>
+        <p class="leading-relaxed text-gray-500">{content.beta.copy}</p>
+        <div class="mt-4 space-y-2 text-sm text-gray-400">
           <p>{content.beta.os}</p>
           <p>{content.beta.updates}</p>
         </div>
@@ -198,16 +217,16 @@ const hasWindowsDownload = Boolean(siteConfig.download.windowsUrl);
     </section>
 
     {hasFaq && (
-      <section id="faq" class="mx-auto max-w-6xl px-6 pb-16">
-        <div class="flex flex-col items-start justify-between gap-4 rounded-2xl border border-[#30363d] bg-[#161b22] p-8 md:flex-row md:items-center">
+      <section id="faq" class="mx-auto max-w-5xl scroll-mt-24 px-6 py-16">
+        <div class="card flex flex-col items-start justify-between gap-6 rounded-3xl p-8 md:flex-row md:items-center">
           <div>
-            <h2 class="text-2xl font-semibold text-white">{content.faq.title}</h2>
-            <p class="mt-2 text-sm text-slate-400">{content.faq.copy}</p>
+            <h2 class="text-2xl font-bold text-gray-200">{content.faq.title}</h2>
+            <p class="mt-2 text-gray-500">{content.faq.copy}</p>
           </div>
           <ExternalLink
             href={siteConfig.faqBaseUrl}
             variant="button"
-            class="border-[#30363d] bg-[#0d1117]"
+            class="border border-gray-700 px-8 py-3 text-sm font-bold text-gray-200 transition hover:border-gray-500"
           >
             {content.faq.cta}
           </ExternalLink>
@@ -215,40 +234,55 @@ const hasWindowsDownload = Boolean(siteConfig.download.windowsUrl);
       </section>
     )}
 
-    <section id="community" class="mx-auto max-w-6xl px-6 pb-20">
-      <div class="rounded-2xl border border-[#30363d] bg-[#161b22] p-8">
-        <h2 class="text-2xl font-semibold text-white">{content.community.title}</h2>
-        <p class="mt-2 text-sm text-slate-400">{content.community.copy}</p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          {qnaUrl && (
-            <ExternalLink href={qnaUrl} variant="button">
-              {content.community.qna}
-            </ExternalLink>
-          )}
-          {bugUrl && (
-            <ExternalLink href={bugUrl} variant="button">
-              {content.community.bug}
-            </ExternalLink>
-          )}
-          {featureUrl && (
-            <ExternalLink href={featureUrl} variant="button">
-              {content.community.feature}
-            </ExternalLink>
-          )}
-          {announcementsUrl && (
-            <ExternalLink href={announcementsUrl} variant="button">
-              {content.community.announcements}
-            </ExternalLink>
-          )}
-        </div>
+    <section id="qna" class="mx-auto max-w-5xl scroll-mt-24 px-6 py-24 text-center">
+      <h2 class="mb-6 text-4xl font-bold text-gray-200">{content.community.title}</h2>
+      <p class="mx-auto mb-12 max-w-2xl text-lg text-gray-500">
+        {content.community.copy}
+      </p>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {qnaUrl && (
+          <ExternalLink
+            href={qnaUrl}
+            class="card flex flex-col items-center justify-center rounded-2xl p-6 hover:bg-gray-800/50"
+          >
+            <span class="mb-2 text-2xl">💬</span>
+            <span class="font-bold">{content.community.qna}</span>
+          </ExternalLink>
+        )}
+        {bugUrl && (
+          <ExternalLink
+            href={bugUrl}
+            class="card flex flex-col items-center justify-center rounded-2xl p-6 hover:bg-gray-800/50"
+          >
+            <span class="mb-2 text-2xl">🐛</span>
+            <span class="font-bold">{content.community.bug}</span>
+          </ExternalLink>
+        )}
+        {featureUrl && (
+          <ExternalLink
+            href={featureUrl}
+            class="card flex flex-col items-center justify-center rounded-2xl p-6 hover:bg-gray-800/50"
+          >
+            <span class="mb-2 text-2xl">💡</span>
+            <span class="text-sm font-bold">{content.community.feature}</span>
+          </ExternalLink>
+        )}
+        {announcementsUrl && (
+          <ExternalLink
+            href={announcementsUrl}
+            class="card flex flex-col items-center justify-center rounded-2xl p-6 hover:bg-gray-800/50"
+          >
+            <span class="mb-2 text-2xl">📢</span>
+            <span class="font-bold">{content.community.announcements}</span>
+          </ExternalLink>
+        )}
       </div>
     </section>
   </main>
 
-  <footer class="relative z-10 border-t border-[#30363d]">
-    <div class="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
-      <p>© {new Date().getFullYear()} Notaly Project</p>
-      <p>{content.footer.slogan}</p>
-    </div>
+  <footer class="mt-20 border-t border-gray-900 py-20 text-center text-gray-600">
+    <p class="code-font mb-4 text-sm">{content.footer.tagline}</p>
+    <p>© {new Date().getFullYear()} Notaly Team. All rights reserved.</p>
   </footer>
 </div>

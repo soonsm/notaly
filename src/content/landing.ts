@@ -13,30 +13,29 @@ export type LandingContent = {
     github: string;
   };
   hero: {
+    badge: string;
     title: string;
-    slogan: string;
+    taglineLine1: string;
+    taglineLine2: string;
     description: string;
+    ctaDownload: string;
     ctaMac: string;
     ctaWindows: string;
     ctaGithub: string;
+    ctaBeta: string;
   };
   scatter: {
-    title: string;
-    subtitle: string;
     left: {
       title: string;
-      copy: string;
-      code: string;
     };
     right: {
       title: string;
-      copy: string;
-      code: string;
     };
   };
   features: {
     title: string;
     cards: Array<{
+      icon: string;
       title: string;
       copy: string;
     }>;
@@ -61,16 +60,16 @@ export type LandingContent = {
     announcements: string;
   };
   footer: {
-    slogan: string;
+    tagline: string;
   };
 };
 
 export const koContent: LandingContent = {
   lang: 'ko',
   meta: {
-    title: 'Notaly | 로컬 지식 기록 앱',
+    title: 'Notaly | 생각은 흩뿌리고, 쿼리로 하나로 묶으세요',
     description:
-      '흩어진 생각을 텍스트로 남기고, 태그로 구조화하고, 쿼리로 다시 꺼내보세요. 로컬에 저장되는 개인 지식 관리 앱 Notaly.'
+      '어디에 저장할지 고민하지 마세요. 어떤 줄이든 데이터로 표시만 하세요. 흩어진 아이디어들이 하나의 뷰로 모이는 것을 경험해 보세요.'
   },
   nav: {
     features: '기능',
@@ -81,42 +80,43 @@ export const koContent: LandingContent = {
     github: 'GitHub'
   },
   hero: {
+    badge: '✨ 현재 공공 베타 버전 테스트 중',
     title: 'Notaly',
-    slogan: '기록은 남기고, 생각은 모으고. Notaly',
+    taglineLine1: '생각은 흩뿌리고,',
+    taglineLine2: '쿼리로 하나로 묶으세요.',
     description:
-      '흩어진 생각을 텍스트로 남기고, 태그로 구조화하고, 쿼리로 다시 꺼내보세요. 로컬에 저장되는 개인 지식 관리 앱 Notaly.',
-    ctaMac: 'Download for macOS',
-    ctaWindows: 'Download for Windows',
-    ctaGithub: 'View on GitHub'
+      '어디에 저장할지 고민하지 마세요. 어떤 줄이든 데이터로 표시만 하세요. 흩어진 아이디어들이 하나의 뷰로 모이는 것을 경험해 보세요.',
+    ctaDownload: 'Download Beta',
+    ctaMac: 'macOS 베타 다운로드',
+    ctaWindows: 'Windows 베타 다운로드',
+    ctaGithub: 'GitHub',
+    ctaBeta: 'Beta'
   },
   scatter: {
-    title: '흩어짐을 모으는 기록',
-    subtitle: '텍스트, 태그, 쿼리로 정리하는 데스크톱 지식 베이스',
     left: {
-      title: 'Scatter',
-      copy: '떠오르는 생각을 즉시 기록하고, 태그로 단서를 남깁니다.',
-      code: `- 오늘 회의: #product #roadmap\n- 버그 재현: #issue #sync\n- 아이디어: #alpha #experiment`
+      title: '// 1. Scatter'
     },
     right: {
-      title: 'Unite',
-      copy: '태그와 쿼리로 연결된 기록을 모아 다시 꺼냅니다.',
-      code: `query tag:product AND tag:roadmap\nquery tag:issue AND updated:7d\nquery tag:alpha OR tag:experiment`
+      title: '// 2. Unite'
     }
   },
   features: {
-    title: '핵심 기능',
+    title: '왜 Notaly인가요?',
     cards: [
       {
-        title: 'Attribute Tags',
-        copy: '메모를 태그로 구조화하고, 프로젝트 맥락을 한눈에 관리합니다.'
+        icon: '🏷️',
+        title: 'Attributes',
+        copy: '모든 라인에 메타데이터를 부여하세요. Notaly는 중첩된 하위 구조까지 하나의 데이터 객체로 취급합니다.'
       },
       {
+        icon: '⚡',
         title: 'Live Queries',
-        copy: '조건에 맞는 기록을 실시간으로 모아 뷰로 구성합니다.'
+        copy: '어느 페이지에서든 실시간으로 블록을 불러오세요. 쿼리 결과의 수정은 원본에 즉시 반영됩니다.'
       },
       {
-        title: 'Local Privacy',
-        copy: '데이터는 로컬에 저장됩니다. 개인 기록은 개인에게 남습니다.'
+        icon: '🛡️',
+        title: 'Local First',
+        copy: '데이터는 사용자의 로컬 텍스트 파일로 저장됩니다. 파일의 소유권을 유지하며 강력한 기능을 누리세요.'
       }
     ]
   },
@@ -132,24 +132,24 @@ export const koContent: LandingContent = {
     cta: 'FAQ 보기'
   },
   community: {
-    title: '커뮤니티 / 지원',
-    copy: '질문, 버그, 기능 제안은 Discussions에서 받고 있습니다.',
+    title: 'Community',
+    copy: '질문하거나 피드백을 남겨주세요. Notaly는 사용자와 함께 성장합니다.',
     qna: 'Q&A',
-    bug: '버그 제보',
-    feature: '기능 제안',
-    announcements: '공지사항'
+    bug: 'Report a Bug',
+    feature: 'Feature Requests',
+    announcements: 'Announcements'
   },
   footer: {
-    slogan: '기록은 남기고, 생각은 모으고. Notaly'
+    tagline: 'Notaly: Beyond Plain Text'
   }
 };
 
 export const enContent: LandingContent = {
   lang: 'en',
   meta: {
-    title: 'Notaly | Local-first knowledge app',
+    title: 'Notaly | Scatter your thoughts, unite them with Queries',
     description:
-      'Capture thoughts in plain text, structure them with tags, and surface them again with queries. A local-first personal knowledge app for your desktop.'
+      "Don't worry about where to save. Just mark any line as data, and watch your scattered ideas come together in a single view."
   },
   nav: {
     features: 'Features',
@@ -160,42 +160,43 @@ export const enContent: LandingContent = {
     github: 'GitHub'
   },
   hero: {
+    badge: '✨ Currently in Public Beta',
     title: 'Notaly',
-    slogan: 'Stay Noted, Stay Notaly.',
+    taglineLine1: 'Scatter your thoughts,',
+    taglineLine2: 'unite them with Queries.',
     description:
-      'Capture thoughts in plain text, structure them with tags, and surface them again with queries. A local-first personal knowledge app for your desktop.',
-    ctaMac: 'Download for macOS',
-    ctaWindows: 'Download for Windows',
-    ctaGithub: 'View on GitHub'
+      "Don't worry about where to save. Just mark any line as data, and watch your scattered ideas come together in a single view.",
+    ctaDownload: 'Download Beta',
+    ctaMac: 'Download Beta for macOS',
+    ctaWindows: 'Download Beta for Windows',
+    ctaGithub: 'GitHub',
+    ctaBeta: 'Beta'
   },
   scatter: {
-    title: 'From Scatter to Unite',
-    subtitle: 'A desktop knowledge base shaped by text, tags, and queries.',
     left: {
-      title: 'Scatter',
-      copy: 'Log ideas fast, leave tags as anchors for later.',
-      code: `- Team sync: #product #roadmap\n- Repro steps: #issue #sync\n- Idea: #alpha #experiment`
+      title: '// 1. Scatter'
     },
     right: {
-      title: 'Unite',
-      copy: 'Pull related notes together with live queries.',
-      code: `query tag:product AND tag:roadmap\nquery tag:issue AND updated:7d\nquery tag:alpha OR tag:experiment`
+      title: '// 2. Unite'
     }
   },
   features: {
-    title: 'Core Features',
+    title: 'Why Notaly?',
     cards: [
       {
-        title: 'Attribute Tags',
-        copy: 'Structure notes with tags and keep project context in view.'
+        icon: '🏷️',
+        title: 'Attributes',
+        copy: 'Assign metadata to any block. Notaly treats the nested structure as a single data object.'
       },
       {
+        icon: '⚡',
         title: 'Live Queries',
-        copy: 'Build dynamic views that always surface the right notes.'
+        copy: 'Pull blocks anywhere in real-time. Changes in Query results are synced back to the source.'
       },
       {
-        title: 'Local Privacy',
-        copy: 'Your data stays on device. Personal notes remain yours.'
+        icon: '🛡️',
+        title: 'Local First',
+        copy: 'Your data stays in plain text files. Own your files while enjoying the power of a database.'
       }
     ]
   },
@@ -211,14 +212,14 @@ export const enContent: LandingContent = {
     cta: 'View FAQ'
   },
   community: {
-    title: 'Community & Support',
-    copy: 'Ask questions, report bugs, and propose features in Discussions.',
+    title: 'Community',
+    copy: 'Have questions or feedback? Notaly grows with its community.',
     qna: 'Q&A',
     bug: 'Report a Bug',
     feature: 'Feature Requests',
     announcements: 'Announcements'
   },
   footer: {
-    slogan: 'Stay Noted, Stay Notaly.'
+    tagline: 'Notaly: Beyond Plain Text'
   }
 };

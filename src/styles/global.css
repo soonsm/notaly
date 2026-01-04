@@ -14,24 +14,33 @@ body {
     system-ui, -apple-system, "Segoe UI", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
 }
 
-:lang(ko) h1 {
-  font-size: 2.25rem;
+.code-font {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
-:lang(ko) h2 {
-  font-size: 1.875rem;
+.gradient-text {
+  background: linear-gradient(90deg, #58a6ff, #bc8cff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-:lang(ko) h3 {
-  font-size: 1.5rem;
+.card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  transition: all 0.3s ease;
 }
 
-:lang(ko) header a {
-  font-size: 0.875rem;
+.card:hover {
+  border-color: #58a6ff;
+  transform: translateY(-4px);
 }
 
-:lang(ko) a.inline-flex {
-  font-size: 0.875rem;
+.nav-link:hover {
+  color: #58a6ff;
 }
