@@ -58,6 +58,17 @@ export type LandingContent = {
     feature: string;
     announcements: string;
   };
+  waitlist: {
+    title: string;
+    copy: string;
+    placeholder: string;
+    submit: string;
+    success: string;
+    exists: string;
+    error: string;
+    invalid: string;
+    close: string;
+  };
   footer: {
     tagline: string;
   };
@@ -87,7 +98,7 @@ export const koContent: LandingContent = {
       "어디에 저장할지 고민하지 마세요. 어떤 줄이든 데이터로 표시만 하세요. 흩어진 아이디어들이 하나의 뷰로 모이는 것을 경험해 보세요.",
     ctaDownload: "Download Beta",
     ctaMac: "macOS 베타 다운로드",
-    ctaWindows: "Windows 베타 다운로드",
+    ctaWindows: "Windows (Coming soon)",
     ctaGithub: "GitHub",
     ctaBeta: "Beta",
   },
@@ -135,6 +146,17 @@ export const koContent: LandingContent = {
     feature: "Feature Requests",
     announcements: "Announcements",
   },
+  waitlist: {
+    title: "Windows 출시 소식 받기",
+    copy: "Windows 베타가 준비되면 이메일로 알려드릴게요.",
+    placeholder: "이메일 주소",
+    submit: "저장",
+    success: "등록 완료! Windows 베타 소식을 보내드릴게요.",
+    exists: "이미 등록된 이메일이에요.",
+    error: "잠시 후 다시 시도해 주세요.",
+    invalid: "유효한 이메일을 입력해 주세요.",
+    close: "닫기",
+  },
   footer: {
     tagline: "Notaly: Beyond Plain Text",
   },
@@ -164,7 +186,7 @@ export const enContent: LandingContent = {
       "Don't worry about where to save. Just mark any line as data, and watch your scattered ideas come together in a single view.",
     ctaDownload: "Download Beta",
     ctaMac: "Download Beta for macOS",
-    ctaWindows: "Download Beta for Windows",
+    ctaWindows: "Windows (Coming soon)",
     ctaGithub: "GitHub",
     ctaBeta: "Beta",
   },
@@ -211,6 +233,17 @@ export const enContent: LandingContent = {
     bug: "Report a Bug",
     feature: "Feature Requests",
     announcements: "Announcements",
+  },
+  waitlist: {
+    title: "Get Windows updates",
+    copy: "We will email you when the Windows beta is ready.",
+    placeholder: "Email address",
+    submit: "Save",
+    success: "You're on the list! We'll email you about the Windows beta.",
+    exists: "That email is already on the list.",
+    error: "Please try again in a moment.",
+    invalid: "Please enter a valid email.",
+    close: "Close",
   },
   footer: {
     tagline: "Notaly: Beyond Plain Text",

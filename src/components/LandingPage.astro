@@ -23,6 +23,7 @@ const hasFaq = Boolean(siteConfig.faqBaseUrl);
 
 const macUrl = siteConfig.download.macosUrl;
 const windowsUrl = siteConfig.download.windowsUrl;
+const waitlist = content.waitlist;
 const hasMacDownload = Boolean(macUrl);
 const hasWindowsDownload = Boolean(windowsUrl);
 const useSingleDownload =
@@ -146,14 +147,69 @@ const featureIcons = [
           </ExternalLink>
         )}
         {!useSingleDownload && hasWindowsDownload && (
-          <ExternalLink
-            href={windowsUrl}
-            variant="button"
-            class={primaryDownload === 'windows' ? primaryDownloadClass : secondaryDownloadClass}
+          <button
+            type="button"
+            class={`${primaryDownload === 'windows' ? primaryDownloadClass : secondaryDownloadClass} inline-flex items-center gap-2`}
+            data-waitlist-open
           >
-            {content.hero.ctaWindows}
-          </ExternalLink>
+            <span>{content.hero.ctaWindows}</span>
+          </button>
         )}
+      </div>
+      <div
+        class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4 py-10"
+        data-waitlist-modal
+        data-waitlist-success={waitlist.success}
+        data-waitlist-exists={waitlist.exists}
+        data-waitlist-error={waitlist.error}
+        data-waitlist-invalid={waitlist.invalid}
+        data-waitlist-locale={lang}
+        data-waitlist-source="windows"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="waitlist-title"
+        aria-describedby="waitlist-copy"
+      >
+        <div class="card w-full max-w-lg rounded-3xl p-8 text-left shadow-2xl">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h3 id="waitlist-title" class="text-2xl font-bold text-gray-100">
+                {waitlist.title}
+              </h3>
+              <p id="waitlist-copy" class="mt-2 text-sm text-gray-400">
+                {waitlist.copy}
+              </p>
+            </div>
+            <button
+              type="button"
+              class="rounded-full border border-gray-700 px-3 py-1 text-xs text-gray-400 transition hover:border-gray-500"
+              data-waitlist-close
+            >
+              {waitlist.close}
+            </button>
+          </div>
+          <form class="mt-6 space-y-4" data-waitlist-form>
+            <label class="sr-only" for="waitlist-email">Email</label>
+            <input
+              id="waitlist-email"
+              name="email"
+              type="email"
+              required
+              placeholder={waitlist.placeholder}
+              autocomplete="email"
+              class="w-full rounded-xl border border-gray-800 bg-black/50 px-4 py-3 text-sm text-gray-100 placeholder-gray-500 focus:border-blue-500 focus:outline-none"
+              data-waitlist-email
+            />
+            <button
+              type="submit"
+              class="w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white transition hover:bg-blue-500"
+              data-waitlist-submit
+            >
+              {waitlist.submit}
+            </button>
+            <p class="hidden text-sm" data-waitlist-message aria-live="polite"></p>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -318,3 +374,112 @@ const featureIcons = [
     <p>© {new Date().getFullYear()} Notaly Team. All rights reserved.</p>
   </footer>
 </div>
+
+<script>
+  const modal = document.querySelector('[data-waitlist-modal]');
+  if (modal) {
+    const openButton = document.querySelector('[data-waitlist-open]');
+    const closeButton = modal.querySelector('[data-waitlist-close]');
+    const form = modal.querySelector('[data-waitlist-form]');
+    const emailInput = modal.querySelector('[data-waitlist-email]');
+    const message = modal.querySelector('[data-waitlist-message]');
+    const submitButton = modal.querySelector('[data-waitlist-submit]');
+    const texts = {
+      success: modal.dataset.waitlistSuccess || 'Saved.',
+      exists: modal.dataset.waitlistExists || 'Already saved.',
+      error: modal.dataset.waitlistError || 'Please try again.',
+      invalid: modal.dataset.waitlistInvalid || 'Invalid email.'
+    };
+    const locale = modal.dataset.waitlistLocale || 'en';
+    const source = modal.dataset.waitlistSource || 'windows';
+
+    const showMessage = (text, tone) => {
+      if (!message) return;
+      message.textContent = text;
+      message.classList.remove('hidden', 'text-rose-400', 'text-emerald-400', 'text-blue-400');
+      if (tone === 'success') {
+        message.classList.add('text-emerald-400');
+      } else if (tone === 'info') {
+        message.classList.add('text-blue-400');
+      } else {
+        message.classList.add('text-rose-400');
+      }
+    };
+
+    const openModal = () => {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      if (message) {
+        message.classList.add('hidden');
+        message.textContent = '';
+      }
+      if (emailInput instanceof HTMLInputElement) {
+        emailInput.focus();
+      }
+    };
+
+    const closeModal = () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+      if (form instanceof HTMLFormElement) {
+        form.reset();
+      }
+      if (message) {
+        message.classList.add('hidden');
+        message.textContent = '';
+      }
+    };
+
+    openButton?.addEventListener('click', openModal);
+    closeButton?.addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!(emailInput instanceof HTMLInputElement) || !(form instanceof HTMLFormElement)) {
+        return;
+      }
+      const email = emailInput.value.trim();
+      if (!email || !emailInput.checkValidity()) {
+        showMessage(texts.invalid, 'error');
+        return;
+      }
+
+      submitButton?.setAttribute('disabled', 'true');
+      try {
+        const response = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ email, source, locale })
+        });
+        const data = await response.json().catch(() => null);
+        if (!response.ok) {
+          showMessage(texts.error, 'error');
+          return;
+        }
+
+        const status = data?.status;
+        if (status === 'exists') {
+          showMessage(texts.exists, 'info');
+        } else {
+          showMessage(texts.success, 'success');
+        }
+      } catch {
+        showMessage(texts.error, 'error');
+      } finally {
+        submitButton?.removeAttribute('disabled');
+      }
+    });
+  }
+</script>
