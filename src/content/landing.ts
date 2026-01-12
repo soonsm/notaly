@@ -141,7 +141,7 @@ export const koContent: LandingContent = {
   community: {
     title: "Community",
     copy: "질문하거나 피드백을 남겨주세요. Notaly는 사용자와 함께 성장합니다.",
-    qna: "Community",
+    qna: "Q&A",
     bug: "Report a Bug",
     feature: "Feature Requests",
     announcements: "Announcements",
