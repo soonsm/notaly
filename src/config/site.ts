@@ -5,7 +5,7 @@ export const siteConfig = {
   faqBaseUrl: '',
   discussionsBaseUrl: 'https://github.com/soonsm/nota-release/discussions',
   download: {
-    macosUrl: 'https://github.com/soonsm/nota-release/releases/latest',
+    macosUrl: 'https://notaly.dev/download/macos',
     windowsUrl: 'https://github.com/soonsm/nota-release/releases/latest'
   },
   discussions: {
