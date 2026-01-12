@@ -10,8 +10,8 @@ body {
 }
 
 :lang(ko) body {
-  font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic",
-    system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system,
+    "Segoe UI", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   letter-spacing: -0.02em;
@@ -19,8 +19,7 @@ body {
 }
 
 .code-font {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .gradient-text {
@@ -43,4 +42,8 @@ body {
 
 .nav-link:hover {
   color: #58a6ff;
+}
+
+.waitlist-button {
+  font-size: 0.95rem;
 }

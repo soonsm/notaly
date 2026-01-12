@@ -19,6 +19,17 @@ type Env = {
   notaly?: D1DatabaseLike;
 };
 
+const KST_OFFSET_MS = 9 * 60 * 60 * 1000;
+
+const toKstTimestamp = (date = new Date()): string => {
+  const kst = new Date(date.getTime() + KST_OFFSET_MS);
+  const pad = (value: number) => value.toString().padStart(2, '0');
+
+  return `${kst.getUTCFullYear()}-${pad(kst.getUTCMonth() + 1)}-${pad(
+    kst.getUTCDate()
+  )} ${pad(kst.getUTCHours())}:${pad(kst.getUTCMinutes())}:${pad(kst.getUTCSeconds())}`;
+};
+
 const isValidEmail = (value: string): boolean => {
   const trimmed = value.trim();
   if (trimmed.length === 0) {
@@ -76,10 +87,13 @@ export const onRequest = async ({
   const locale = typeof body.locale === 'string' && body.locale.trim().length > 0
     ? body.locale.trim()
     : null;
+  const createdAt = toKstTimestamp();
 
   const result = await env.notaly
-    .prepare('INSERT OR IGNORE INTO waitlist (email, source, locale) VALUES (?1, ?2, ?3)')
-    .bind(email, source, locale)
+    .prepare(
+      'INSERT OR IGNORE INTO waitlist (email, created_at, source, locale) VALUES (?1, ?2, ?3, ?4)'
+    )
+    .bind(email, createdAt, source, locale)
     .run();
 
   const inserted = (result.meta?.changes ?? 0) > 0;
