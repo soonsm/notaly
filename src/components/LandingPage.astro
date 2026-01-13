@@ -146,15 +146,13 @@ const featureIcons = [
             {content.hero.ctaMac}
           </ExternalLink>
         )}
-        {!useSingleDownload && hasWindowsDownload && (
-          <button
-            type="button"
-            class={`${primaryDownload === 'windows' ? primaryDownloadClass : secondaryDownloadClass} waitlist-button inline-flex items-center gap-2`}
-            data-waitlist-open
-          >
-            <span class="waitlist-label">{content.hero.ctaWindows}</span>
-          </button>
-        )}
+        <button
+          type="button"
+          class={`${primaryDownload === 'windows' ? primaryDownloadClass : secondaryDownloadClass} waitlist-button inline-flex items-center gap-2`}
+          data-waitlist-open
+        >
+          <span class="waitlist-label">{content.hero.ctaWindows}</span>
+        </button>
       </div>
       <div
         class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4 py-10"
